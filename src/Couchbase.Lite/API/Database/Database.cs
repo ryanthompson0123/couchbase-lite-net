@@ -295,6 +295,31 @@ namespace Couchbase.Lite
         }
 
         /// <summary>
+        /// Changes the encryption key currently on the database, or removes it
+        /// if <c>null</c> is specified
+        /// </summary>
+        /// <param name="key">The key to alter the database encryption with</param>
+        public void ChangeEncryptionKey(IEncryptionKey key)
+        {
+            LiteCoreBridge.Check(err =>
+            {
+                var nativeKey = new C4EncryptionKey();
+                if (key == null) {
+                    nativeKey.algorithm = C4EncryptionAlgorithm.None;
+                }
+                else {
+                    nativeKey.algorithm = C4EncryptionAlgorithm.AES256;
+                    int i = 0;
+                    foreach (var b in key.KeyData) {
+                        nativeKey.bytes[i++] = b;
+                    }
+                }
+
+                return Native.c4db_rekey(c4db, &nativeKey, err);
+            });
+        }
+
+        /// <summary>
         /// Closes the database
         /// </summary>
         public void Close()
@@ -510,11 +535,6 @@ namespace Couchbase.Lite
 
         #region Internal Methods
 
-        internal void ChangeEncryptionKey(object key)
-        {
-            throw new NotImplementedException();
-        }
-
         internal void ResolveConflict(string docID, IConflictResolver resolver)
         {
             InBatch(() =>
@@ -668,9 +688,6 @@ namespace Couchbase.Lite
 
             var encrypted = "";
             if(Config.EncryptionKey != null) {
-#if true
-                throw new NotImplementedException("Encryption is not yet supported");
-#else
                 var key = Config.EncryptionKey;
                 int i = 0;
                 config.encryptionKey.algorithm = C4EncryptionAlgorithm.AES256;
@@ -679,7 +696,6 @@ namespace Couchbase.Lite
                 }
 
                 encrypted = "encrypted ";
-#endif
             }
 
             Log.To.Database.I(Tag, $"Opening {encrypted}database at {path}");

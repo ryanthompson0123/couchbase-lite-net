@@ -765,7 +765,7 @@ namespace Test
             Database.Exists("nonexist", Directory).Should().BeFalse("because that DB does not exist");
         }
 
-        //[Fact] Needs LiteCore fix
+        [Fact]
         public void TestCompact()
         {
             var docs = CreateDocs(20);
@@ -864,6 +864,63 @@ namespace Test
                 db.Config.Directory.Should().Be(config.Directory, "because the directory should be the same");
                 db.Config.ConflictResolver.Should().NotBe(config.ConflictResolver,
                     "because the conflict resolver should be different now");
+            }
+        }
+
+        [Fact]
+        public void TestEncryption()
+        {
+            var key1 = EncryptionKeyFactory.Create("thefirstkey");
+            var key2 = EncryptionKeyFactory.Create("thesecondkey");
+            var config = new DatabaseConfiguration {
+                Directory = Directory,
+                EncryptionKey = key1
+            };
+
+            using (var encryptedDB = new Database("encrypted", config))
+            using (var seekrit = new Document("seekrit")) {
+                seekrit.Set("answer", 42);
+                encryptedDB.Save(seekrit);
+            }
+
+            using (var encryptedDB = new Database("encrypted", config))
+            using (var seekrit = encryptedDB.GetDocument("seekrit")) {
+                seekrit.Should().NotBeNull();
+                seekrit.GetInt("answer").Should().Be(42,
+                    "because using the same key should allow access to the DB and its documents");
+            }
+
+            config.EncryptionKey = key2;
+            this.Invoking(t =>
+            {
+                var badDB = new Database("encrypted", config);
+            }).ShouldThrow<LiteCoreException>().Which.Error.Should().Be(new C4Error(C4ErrorCode.NotADatabaseFile),
+                "because opening with the wrong key should throw");
+
+            config.EncryptionKey = null;
+            this.Invoking(t =>
+            {
+                var badDB = new Database("encrypted", config);
+            }).ShouldThrow<LiteCoreException>().Which.Error.Should().Be(new C4Error(C4ErrorCode.NotADatabaseFile),
+                "because opening with no key should throw");
+
+            config.EncryptionKey = key1;
+            using (var encryptedDB = new Database("encrypted", config)) {
+                encryptedDB.ChangeEncryptionKey(key2);
+            }
+
+            this.Invoking(t =>
+            {
+                var badDB = new Database("encrypted", config);
+            }).ShouldThrow<LiteCoreException>().Which.Error.Should().Be(new C4Error(C4ErrorCode.NotADatabaseFile),
+                "because opening with the wrong key should throw");
+
+            config.EncryptionKey = key2;
+            using (var encryptedDB = new Database("encrypted", config))
+            using (var seekrit = encryptedDB.GetDocument("seekrit")) {
+                seekrit.Should().NotBeNull();
+                seekrit.GetInt("answer").Should().Be(42,
+                    "because using the same key should allow access to the DB and its documents");
             }
         }
 
