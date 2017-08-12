@@ -62,6 +62,7 @@ namespace api_walkthrough
                     var doc = new Document();
                     doc.Set("type", "user");
                     doc.Set("name", $"user {i}");
+                    doc.Set("admin", false);
                     database.Save(doc);
                     Console.WriteLine($"saved user document {doc.GetString("name")}");
                 }

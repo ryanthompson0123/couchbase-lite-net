@@ -338,35 +338,24 @@ namespace Couchbase.Lite
         /// <summary>
         /// Creates an index of the given type on the given path with the given configuration
         /// </summary>
-        /// <param name="expressions">The expressions to create the index on (must be either string
-        /// or IExpression)</param>
-        /// <param name="indexType">The type of index to create</param>
-        /// <param name="options">The configuration to apply to the index</param>
-        public void CreateIndex(IList expressions, IndexType indexType, IndexOptions options)
+        /// <param name="name">The name to assign to the index</param>
+        /// <param name="index">The index to create in the database</param>
+        public void CreateIndex(string name, IIndex index)
         {
+            name.ThrowIfNullOrEmpty(nameof(name));
+            index.ThrowIfNull(nameof(index));
+            var concreteIndex = Misc.TryCast<IIndex, QueryIndex>(index);
+
             _threadSafety.DoLocked(() =>
             {
                 CheckOpen();
-                var jsonObj = QueryExpression.EncodeToJSON(expressions);
+                var jsonObj = concreteIndex.EncodeToJSON();
                 var json = JsonConvert.SerializeObject(jsonObj);
                 LiteCoreBridge.Check(err =>
                 {
-                    var internalOpts = IndexOptions.Internal(options);
-                    return Native.c4db_createIndex(c4db, json, (C4IndexType) indexType, &internalOpts, err);
+                    var internalOpts = concreteIndex.IndexOptions;
+                    return Native.c4db_createIndex(c4db, json, concreteIndex.IndexType, &internalOpts, err);
                 });
-            });
-        }
-
-        /// <summary>
-        /// Creates an <see cref="IndexType.ValueIndex"/> index on the given path
-        /// </summary>
-        /// <param name="expressions">The expressions to create the index on</param>
-        public void CreateIndex(IList<IExpression> expressions)
-        {
-            _threadSafety.DoLocked(() =>
-            {
-                CheckOpen();
-                CreateIndex(expressions as IList, IndexType.ValueIndex, null);
             });
         }
 
@@ -402,11 +391,10 @@ namespace Couchbase.Lite
         }
 
         /// <summary>
-        /// Deletes an index of the given <see cref="IndexType"/> on the given propertyPath
+        /// Deletes the index with the given name from the database
         /// </summary>
-        /// <param name="propertyPath">The path of the index to delete</param>
-        /// <param name="type">The type of the index to delete</param>
-        public void DeleteIndex(string propertyPath, IndexType type)
+        /// <param name="name">The name of the index to delete</param>
+        public void DeleteIndex(string name)
         {
             _threadSafety.DoLocked(() =>
             {

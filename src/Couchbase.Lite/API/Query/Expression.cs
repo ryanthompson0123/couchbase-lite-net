@@ -76,16 +76,6 @@ namespace Couchbase.Lite.Query
         }
 
         /// <summary>
-        /// Returns an expression representing the result of a group of given expressions
-        /// </summary>
-        /// <param name="expressions">The expressions to group together</param>
-        /// <returns>An expression representing the result of a group of given expressions</returns>
-        internal static IExpression Group(params IExpression[] expressions)
-        {
-            throw new NotImplementedException();
-        }
-
-        /// <summary>
         /// Creates an object that can generate expressions for retrieving metadata about
         /// a result
         /// </summary>
