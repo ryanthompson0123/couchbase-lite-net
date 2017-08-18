@@ -132,7 +132,7 @@ src/lib/Newtonsoft.Json.dll
 
 src/lib/System.Net.Http.Formatting.dll
 
-src/lib/System.Net.Http.Formatting.dll.mdb
+src/lib/System.Net.Http.Formatting.pdb
 
 Tools/sync_gateway
 Tools/sync_gateway.exe

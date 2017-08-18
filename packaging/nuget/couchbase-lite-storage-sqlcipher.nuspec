@@ -12,8 +12,6 @@
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <description>A storage engine provider for Couchbase Lite .NET that utilizies SQLCipher to gain encryption features.</description>
     <releaseNotes>
-NOTE: .NET 3.5 SUPPORT IS DEPRECATED AND WILL BE DROPPED IN 2.0
-
 Couchbase Lite 1.4 brings initial LINQ support to Couchbase Lite, as well as a number of bug fixes and optimizations.
 
 For full notes see https://developer.couchbase.com/documentation/mobile/1.4/references/couchbase-lite/release-notes/Dot-Net.html
@@ -22,14 +20,6 @@ For full notes see https://developer.couchbase.com/documentation/mobile/1.4/refe
     <tags>couchbase couchbase-mobile couchbase-lite sync database mobile xamarin ios android windows linux mac osx nosql</tags>
     <language>en-US</language>
     <dependencies>
-      <group targetFramework="net35">
-        <dependency id="SQLitePCL.raw" version="0.9.3" />
-        <dependency id="SQLitePCL.ugly" version="0.9.3" />
-        <dependency id="SQLitePCL.plugin.sqlcipher.net35" version="0.9.3" />
-        <dependency id="SQLitePCL.native.sqlcipher.linux" version="0.9.3" />
-        <dependency id="SQLitePCL.native.sqlcipher.windows" version="0.9.3" />
-        <dependency id="SQLitePCL.native.sqlcipher.osx" version="0.9.3" />
-      </group>
       <group targetFramework="net45">
         <dependency id="SQLitePCL.raw" version="0.9.3" />
         <dependency id="SQLitePCL.ugly" version="0.9.3" />
@@ -51,9 +41,6 @@ For full notes see https://developer.couchbase.com/documentation/mobile/1.4/refe
     </dependencies>
   </metadata>
   <files>
-    <!-- .NET 3.5 -->
-    <file target="lib/net35/" src="staging/Couchbase.Lite.Storage.SQLCipher/net35/Couchbase.Lite.Storage.SQLCipher.dll*" />
-
     <!-- .NET 4.5 -->
     <file target="lib/net45/" src="staging/Couchbase.Lite.Storage.SQLCipher/net45/Couchbase.Lite.Storage.SQLCipher.dll*" />
 

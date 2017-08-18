@@ -22,12 +22,6 @@ For full notes see https://developer.couchbase.com/documentation/mobile/1.4/refe
     <tags>couchbase couchbase-mobile couchbase-lite sync database mobile xamarin ios android windows linux mac osx nosql</tags>
     <language>en-US</language>
     <dependencies>
-      <group targetFramework="net35">
-        <dependency id="SQLitePCL.raw" version="0.9.3" />
-        <dependency id="SQLitePCL.ugly" version="0.9.3" />
-        <dependency id="SQLitePCL.plugin.sqlite3.net35" version="0.9.3" />
-        <dependency id="SQLitePCL.native.sqlite3.v110_xp" version="0.9.3" />
-      </group>
       <group targetFramework="net45">
         <dependency id="SQLitePCL.raw" version="0.9.3" />
         <dependency id="SQLitePCL.ugly" version="0.9.3" />
@@ -45,7 +39,6 @@ For full notes see https://developer.couchbase.com/documentation/mobile/1.4/refe
     </dependencies>
   </metadata>
   <files>
-    <file target="lib/net35/" src="staging/Couchbase.Lite.Storage.SystemSQLite/net35/*" />
     <file target="lib/net45/" src="staging/Couchbase.Lite.Storage.SystemSQLite/net45/*" />
     <file target="lib/MonoAndroid/" src="staging/Couchbase.Lite.Storage.SystemSQLite/MonoAndroid/*" />
     <file target="lib/Xamarin.iOS10/" src="staging/Couchbase.Lite.Storage.SystemSQLite/Xamarin.iOS10/*" />

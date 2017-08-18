@@ -12,8 +12,6 @@
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <description>A storage engine provider for Couchbase Lite .NET that utilizies a custom built SQLite library</description>
     <releaseNotes>
-NOTE: .NET 3.5 SUPPORT IS DEPRECATED AND WILL BE DROPPED IN 2.0
-
 Couchbase Lite 1.4 brings initial LINQ support to Couchbase Lite, as well as a number of bug fixes and optimizations.
 
 For full notes see https://developer.couchbase.com/documentation/mobile/1.4/references/couchbase-lite/release-notes/Dot-Net.html

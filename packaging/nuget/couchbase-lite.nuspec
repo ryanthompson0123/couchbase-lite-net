@@ -12,8 +12,6 @@
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <description>A lightweight, document-oriented (NoSQL), syncable database engine for .NET</description>
     <releaseNotes>
-NOTE: .NET 3.5 SUPPORT IS DEPRECATED AND WILL BE DROPPED IN 2.0
-
 Couchbase Lite 1.4 brings initial LINQ support to Couchbase Lite, as well as a number of bug fixes and optimizations.
 
 For full notes see https://developer.couchbase.com/documentation/mobile/1.4/references/couchbase-lite/release-notes/Dot-Net.html
@@ -22,11 +20,6 @@ For full notes see https://developer.couchbase.com/documentation/mobile/1.4/refe
     <tags>couchbase couchbase-mobile couchbase-lite sync database mobile xamarin ios android windows linux mac osx nosql</tags>
     <language>en-US</language>
     <dependencies>
-      <group targetFramework="net35">
-        <dependency id="Newtonsoft.Json" version="7.0.1" />
-        <dependency id="SharpZipLib" version="0.86.0" />
-        <dependency id="Couchbase.Lite.Storage.SystemSQLite" version="$version$" />
-      </group>
       <group targetFramework="net45">
         <dependency id="Newtonsoft.Json" version="7.0.1" />
         <dependency id="SharpZipLib.Portable" version="0.86.0.0003" />
@@ -45,6 +38,5 @@ For full notes see https://developer.couchbase.com/documentation/mobile/1.4/refe
     <file target="lib/net45" src="staging/Couchbase.Lite/net45/*" />
     <file target="lib/MonoAndroid" src="staging/Couchbase.Lite/MonoAndroid/*" />
     <file target="lib/Xamarin.iOS10" src="staging/Couchbase.Lite/Xamarin.iOS10/*" />
-    <file target="lib/net35" src="staging/Couchbase.Lite/net35/*" />
   </files>
 </package>
